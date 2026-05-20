@@ -1,0 +1,91 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model SiteNavigationItem {
+  id        String   @id @default(cuid())
+  label     String
+  href      String   @unique
+  order     Int      @default(0)
+  isVisible Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model SiteFooter {
+  id        String   @id @default(cuid())
+  key       String   @unique
+  content   Json
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model SitePage {
+  id             String   @id @default(cuid())
+  slug           String   @unique
+  title          String
+  seoTitle       String?
+  seoDescription String?
+  content        Json
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+model ContactSubmission {
+  id          String   @id @default(cuid())
+  fullName    String
+  email       String
+  phoneNumber String?
+  inquiryType String?
+  message     String
+  createdAt   DateTime @default(now())
+}
+
+model AdmissionApplication {
+  id                     String   @id @default(cuid())
+  fullName               String
+  email                  String
+  phoneNumber            String?
+  programmeOfInterest    String?
+  previousQualifications String?
+  statement              String?
+  createdAt              DateTime @default(now())
+}
+
+
+model AdminUser {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  name         String
+  passwordHash String
+  role         String   @default("SUPER_ADMIN")
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  passwordResetTokens PasswordResetToken[]
+}
+
+model PasswordResetToken {
+  id        String   @id @default(cuid())
+  tokenHash String   @unique
+  userId    String
+  expiresAt DateTime
+  usedAt    DateTime?
+  createdAt DateTime @default(now())
+  user      AdminUser @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model PortalSetting {
+  id          String   @id @default(cuid())
+  key         String   @unique
+  title       String
+  description String
+  launchAt    DateTime?
+  isEnabled   Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
