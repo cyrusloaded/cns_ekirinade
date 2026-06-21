@@ -1,0 +1,3 @@
+cnsekinrinadde.com, www.cnsekinrinadde.com {
+    reverse_proxy app:3000
+}
