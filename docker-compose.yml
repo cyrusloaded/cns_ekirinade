@@ -8,15 +8,33 @@ services:
       POSTGRES_DB: cns_db
     volumes:
       - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U cns_user -d cns_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  migrator:
+    build: .
+    command: >
+      sh -c "npx prisma db push --schema=./prisma/schema.prisma"
+    environment:
+      - DATABASE_URL=postgresql://cns_user:cns_password@db:5432/cns_db
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: on-failure
 
   app:
     build: .
     restart: always
     environment:
-      # Use the docker-compose network to connect to the db service
-      - DATABASE_URL=postgresql://cns_user:cns_password@db:5432/cns_db?schema=public
+      - DATABASE_URL=postgresql://cns_user:cns_password@db:5432/cns_db
     depends_on:
-      - db
+      db:
+        condition: service_healthy
+      migrator:
+        condition: service_completed_successfully
 
   caddy:
     image: caddy:2-alpine
