@@ -16,14 +16,16 @@ WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
-# Generate Prisma Client
-RUN npx prisma generate
+# Generate Prisma Client (DATABASE_URL is required by prisma.config.ts at parse time
+# but prisma generate never actually connects to the DB — a dummy value is safe here)
+RUN DATABASE_URL="postgresql://dummy:dummy@localhost:5432/dummy" npx prisma generate
 
 # Next.js telemetry is disabled
 ENV NEXT_TELEMETRY_DISABLED 1
 
-# Note: DATABASE_URL should be provided when building if required by Next.js components during build.
-RUN npm run build
+# Next.js may import Prisma config during build, so we pass a dummy DATABASE_URL here too.
+# The build process never connects to the DB, it only generates static output.
+RUN DATABASE_URL="postgresql://dummy:dummy@localhost:5432/dummy" npm run build
 
 # Production image, copy all the files and run next
 FROM base AS runner
