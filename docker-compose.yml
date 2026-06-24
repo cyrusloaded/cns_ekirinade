@@ -15,9 +15,9 @@ services:
       retries: 10
 
   migrator:
-    build: .
-    command: >
-      sh -c "./node_modules/.bin/prisma db push --schema=./prisma/schema.prisma"
+    build:
+      context: .
+      target: migrator
     environment:
       - DATABASE_URL=postgresql://cns_user:cns_password@db:5432/cns_db
     depends_on:
@@ -26,7 +26,9 @@ services:
     restart: on-failure
 
   app:
-    build: .
+    build:
+      context: .
+      target: runner
     restart: always
     environment:
       - DATABASE_URL=postgresql://cns_user:cns_password@db:5432/cns_db

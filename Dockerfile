@@ -26,6 +26,10 @@ ENV NEXT_TELEMETRY_DISABLED 1
 # Next.js may import Prisma config during build, so we pass a dummy DATABASE_URL here too.
 # The build process never connects to the DB, it only generates static output.
 RUN DATABASE_URL="postgresql://dummy:dummy@localhost:5432/dummy" npm run build
+# Migrator image — uses builder stage which has full node_modules + prisma CLI
+FROM builder AS migrator
+WORKDIR /app
+CMD ["./node_modules/.bin/prisma", "db", "push", "--schema=./prisma/schema.prisma"]
 
 # Production image, copy all the files and run next
 FROM base AS runner
