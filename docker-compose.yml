@@ -17,7 +17,7 @@ services:
   migrator:
     build: .
     command: >
-      sh -c "npx prisma db push --schema=./prisma/schema.prisma"
+      sh -c "./node_modules/.bin/prisma db push --schema=./prisma/schema.prisma"
     environment:
       - DATABASE_URL=postgresql://cns_user:cns_password@db:5432/cns_db
     depends_on:
