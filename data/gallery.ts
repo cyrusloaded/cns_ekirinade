@@ -47,7 +47,7 @@ export const galleryItems = [
       "https://lh3.googleusercontent.com/aida-public/AB6AXuDWh2GqTajer2Y7EM6rTGfrXmWsIirGQKH0M2HqITQEy5GWmGu60rphmlbT2B8wJfPdpuiTtMZfH2n3ipNN9wxPgjmg9RGhEPd-63gBtsqIP8uC-Wdydru8e3e_fhGh63NSX4t_Splll20dvyf6soDI0dHDcvc732zb0MOQ3XVny4TRnrx0YeTbr-5BO52_d8Hyc-lCBuDCPQx26NW7eZcGku_SqpOqmxHLhYpMc8QeDsBhCPM3O38sWxd2fT0X7TA-QbgZLWHUPtg",
     alt: "A joyous nursing graduate in traditional academic gown holding a diploma and a small white cross, golden hour sunlight flare",
     icon: GraduationCap,
-    className: "md:col-span-4 md:-mt-16",
+    className: "md:col-span-4",
     imageClassName: "aspect-[4/3] sm:aspect-[3/4]",
   },
   {

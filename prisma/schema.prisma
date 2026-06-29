@@ -58,14 +58,26 @@ model AdmissionApplication {
 }
 
 
+enum AdminRole {
+  SUPER_ADMIN
+  SUB_ADMIN
+}
+
 model AdminUser {
-  id           String   @id @default(cuid())
-  email        String   @unique
+  id           String     @id @default(cuid())
   name         String
+  username     String     @unique
+  email        String     @unique
   passwordHash String
-  role         String   @default("SUPER_ADMIN")
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  role         AdminRole
+  isActive     Boolean    @default(true)
+  lastLogin    DateTime?
+  createdBy    String?
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+
+  creator            AdminUser?           @relation("AdminCreatedBy", fields: [createdBy], references: [id])
+  created            AdminUser[]          @relation("AdminCreatedBy")
   passwordResetTokens PasswordResetToken[]
 }
 
