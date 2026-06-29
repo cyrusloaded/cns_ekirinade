@@ -29,7 +29,7 @@ RUN DATABASE_URL="postgresql://dummy:dummy@localhost:5432/dummy" npm run build
 # Migrator image — uses builder stage which has full node_modules + prisma CLI
 FROM builder AS migrator
 WORKDIR /app
-CMD ["./node_modules/.bin/prisma", "db", "push", "--schema=./prisma/schema.prisma", "--accept-data-loss"]
+CMD ["sh", "-c", "yes | ./node_modules/.bin/prisma db push --schema=./prisma/schema.prisma --accept-data-loss"]
 
 # Production image, copy all the files and run next
 FROM base AS runner
