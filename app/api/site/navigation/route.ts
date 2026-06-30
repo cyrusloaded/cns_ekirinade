@@ -1,21 +1,75 @@
+// import {NextRequest, NextResponse} from "next/server";
+// import {prisma} from "@/lib/prisma";
+
+// export async function GET() {
+//   const items = await prisma.siteNavigationItem.findMany({orderBy: {order: "asc"}});
+//   return NextResponse.json(items);
+// }
+
+// export async function PUT(request: NextRequest) {
+//   const body = await request.json();
+//   if (!Array.isArray(body)) return NextResponse.json({error: "Expected an array"}, {status: 400});
+
+//   const normalized = body.map((item: {href: string; label: string; order: number; isVisible?: boolean}) => ({
+//     href: item.href,
+//     label: item.label,
+//     order: item.order,
+//     isVisible: item.isVisible ?? true,
+//   }));
+
+//   await prisma.$transaction(async (tx) => {
+//     const hrefs = normalized.map((item) => item.href);
+
+//     await Promise.all(
+//       normalized.map((item) =>
+//         tx.siteNavigationItem.upsert({
+//           where: {href: item.href},
+//           update: {label: item.label, order: item.order, isVisible: item.isVisible},
+//           create: item,
+//         })
+//       )
+//     );
+
+//     await tx.siteNavigationItem.deleteMany({
+//       where: {
+//         href: {notIn: hrefs.length ? hrefs : ["__none__"]},
+//       },
+//     });
+//   });
+
+//   const items = await prisma.siteNavigationItem.findMany({orderBy: {order: "asc"}});
+//   return NextResponse.json(items);
+// }
+
 import {NextRequest, NextResponse} from "next/server";
 import {prisma} from "@/lib/prisma";
+import {revalidatePath} from "next/cache";
 
 export async function GET() {
-  const items = await prisma.siteNavigationItem.findMany({orderBy: {order: "asc"}});
+  const items = await prisma.siteNavigationItem.findMany({
+    orderBy: {order: "asc"},
+  });
   return NextResponse.json(items);
 }
 
 export async function PUT(request: NextRequest) {
   const body = await request.json();
-  if (!Array.isArray(body)) return NextResponse.json({error: "Expected an array"}, {status: 400});
+  if (!Array.isArray(body))
+    return NextResponse.json({error: "Expected an array"}, {status: 400});
 
-  const normalized = body.map((item: {href: string; label: string; order: number; isVisible?: boolean}) => ({
-    href: item.href,
-    label: item.label,
-    order: item.order,
-    isVisible: item.isVisible ?? true,
-  }));
+  const normalized = body.map(
+    (item: {
+      href: string;
+      label: string;
+      order: number;
+      isVisible?: boolean;
+    }) => ({
+      href: item.href,
+      label: item.label,
+      order: item.order,
+      isVisible: item.isVisible ?? true,
+    }),
+  );
 
   await prisma.$transaction(async (tx) => {
     const hrefs = normalized.map((item) => item.href);
@@ -24,10 +78,14 @@ export async function PUT(request: NextRequest) {
       normalized.map((item) =>
         tx.siteNavigationItem.upsert({
           where: {href: item.href},
-          update: {label: item.label, order: item.order, isVisible: item.isVisible},
+          update: {
+            label: item.label,
+            order: item.order,
+            isVisible: item.isVisible,
+          },
           create: item,
-        })
-      )
+        }),
+      ),
     );
 
     await tx.siteNavigationItem.deleteMany({
@@ -37,6 +95,12 @@ export async function PUT(request: NextRequest) {
     });
   });
 
-  const items = await prisma.siteNavigationItem.findMany({orderBy: {order: "asc"}});
+  const items = await prisma.siteNavigationItem.findMany({
+    orderBy: {order: "asc"},
+  });
+
+  // Navigation appears on every page — clear the whole site cache
+  revalidatePath("/", "layout");
+
   return NextResponse.json(items);
 }
