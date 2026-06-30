@@ -29,7 +29,12 @@ export type PageContent<T = Record<string, unknown>> = {
 };
 
 export type LandingProgrammePreview = {
-  header: {title: string; description: string; viewAllLabel: string; viewAllHref: string};
+  header: {
+    title: string;
+    description: string;
+    viewAllLabel: string;
+    viewAllHref: string;
+  };
   cards: Array<{
     title: string;
     slug?: string;
@@ -53,10 +58,6 @@ export type LandingPageContent = {
     secondaryCta: {label: string; href: string};
     image: {src: string; alt: string};
     floatingCard: {title: string; description: string};
-  };
-  missionVision: {
-    mission: {title: string; body: string};
-    vision: {title: string; body: string};
   };
   whyChoose?: unknown;
   programmes?: LandingProgrammePreview;
@@ -152,16 +153,49 @@ export type GalleryPageContent = {
     alt: string;
     icon: string;
   };
-  cta: {title: string; description: string; primaryLabel: string; secondaryLabel: string};
+  cta: {
+    title: string;
+    description: string;
+    primaryLabel: string;
+    secondaryLabel: string;
+  };
 };
 
 export type NewsPageContent = {
   hero: {eyebrow: string; title: string; description: string};
   categories: string[];
-  featuredStory: {category: string; date: string; title: string; slug?: string; description: string; body?: string[]; image: string; alt?: string; href?: string};
+  featuredStory: {
+    category: string;
+    date: string;
+    title: string;
+    slug?: string;
+    description: string;
+    body?: string[];
+    image: string;
+    alt?: string;
+    href?: string;
+  };
   retreatCard: {title: string; description: string};
-  keyDates: Array<{month: string; day: string; title: string; location: string}>;
-  updates: Array<{id: number; category: string; date: string; title: string; slug?: string; excerpt: string; body?: string[]; image: string; alt?: string; accent: string; href?: string; published?: boolean}>;
+  keyDates: Array<{
+    month: string;
+    day: string;
+    title: string;
+    location: string;
+  }>;
+  updates: Array<{
+    id: number;
+    category: string;
+    date: string;
+    title: string;
+    slug?: string;
+    excerpt: string;
+    body?: string[];
+    image: string;
+    alt?: string;
+    accent: string;
+    href?: string;
+    published?: boolean;
+  }>;
 };
 
 export type ProgrammesPageContent = {
@@ -217,7 +251,13 @@ export type AdmissionPageContent = {
   journey: {
     title: string;
     description: string;
-    steps: Array<{number: string; icon: string; title: string; description: string; published?: boolean}>;
+    steps: Array<{
+      number: string;
+      icon: string;
+      title: string;
+      description: string;
+      published?: boolean;
+    }>;
   };
   requirements: {
     title: string;
@@ -267,7 +307,16 @@ export type FacilitiesPageContent = {
       body?: string[];
       chips: string[];
     };
-    items: Array<{title: string; slug?: string; href?: string; description: string; body?: string[]; image: string; alt?: string; linkText?: string}>;
+    items: Array<{
+      title: string;
+      slug?: string;
+      href?: string;
+      description: string;
+      body?: string[];
+      image: string;
+      alt?: string;
+      linkText?: string;
+    }>;
     clinic: {
       title: string;
       slug?: string;
@@ -287,8 +336,14 @@ export type FacilitiesPageContent = {
 
 export type ContactPageContent = {
   hero: {eyebrow: string; titleLines: string[]; description: string};
-  infoCard: {title: string; items: Array<{icon: string; title: string; lines: string[]}>};
-  officeHours: {title: string; items: Array<{label: string; value: string; valueClassName?: string}>};
+  infoCard: {
+    title: string;
+    items: Array<{icon: string; title: string; lines: string[]}>;
+  };
+  officeHours: {
+    title: string;
+    items: Array<{label: string; value: string; valueClassName?: string}>;
+  };
   form: {
     title: string;
     description: string;

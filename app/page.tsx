@@ -4,18 +4,24 @@ import WhyChooseSection from "@/components/landing/WhyChooseSection";
 import ProgrammesSection from "@/components/landing/ProgrammesSection";
 import CampusChronicles from "@/components/landing/CampusChronicles";
 import {getPageContent} from "@/lib/cms";
-import type {LandingPageContent} from "@/types/cms";
+import type {LandingPageContent, AboutPageContent} from "@/types/cms";
 
 export default async function HomePage() {
-  const page = await getPageContent<LandingPageContent>("home");
+  const homePage = await getPageContent<LandingPageContent>("home");
+  const aboutPage = await getPageContent<AboutPageContent>("about");
 
   return (
     <main>
-      <HeroSection content={page.content.hero} />
-      <MissionVision content={page.content.missionVision} />
+      <HeroSection content={homePage.content.hero} />
+
+      {/* Mission & Vision from About page */}
+      <MissionVision content={aboutPage.content.missionVision} />
+
       <WhyChooseSection />
-      <ProgrammesSection content={page.content.programmes} />
-      <CampusChronicles content={page.content.chronicles} />
+
+      <ProgrammesSection content={homePage.content.programmes} />
+
+      <CampusChronicles content={homePage.content.chronicles} />
     </main>
   );
 }
