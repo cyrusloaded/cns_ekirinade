@@ -1,3 +1,10 @@
 cnsekinrinadde.com, www.cnsekinrinadde.com {
-    reverse_proxy app:3000
+    handle_path /uploads/* {
+        root * /srv/uploads
+        file_server
+    }
+    
+    handle {
+        reverse_proxy app:3000
+    }
 }

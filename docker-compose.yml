@@ -35,6 +35,8 @@ services:
       - AUTH_SECRET=${AUTH_SECRET}
       - AUTH_URL=${AUTH_URL}
       - JWT_SECRET=${JWT_SECRET}
+    volumes:
+      - uploads_data:/app/public/uploads
     depends_on:
       db:
         condition: service_healthy
@@ -52,6 +54,7 @@ services:
       - ./Caddyfile:/etc/caddy/Caddyfile
       - caddy_data:/data
       - caddy_config:/config
+      - uploads_data:/srv/uploads
     depends_on:
       - app
 
@@ -59,3 +62,4 @@ volumes:
   pgdata:
   caddy_data:
   caddy_config:
+  uploads_data:
