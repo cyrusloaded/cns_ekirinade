@@ -86,6 +86,53 @@ export const landingSeed: PageContent<LandingPageContent> = {
         body: "To raise a new generation of compassionate and competent nursing leaders equipped to transform healthcare systems through excellence, faith, and service.",
       },
     },
+    whyChoose: {
+      title: "Why Choose Ekinrin-Adde?",
+      subtitle: "Where your calling meets professional excellence.",
+      items: [
+        {
+          id: "professional-excellence",
+          title: "Professional Excellence",
+          description:
+            "Curriculum aligned with international standards taught by experienced medical professionals.",
+          image: {src: "/whychoose.png", alt: "Medical lab"},
+          backgroundColor: "#320056",
+          textColor: "#ffffff",
+          layout: "large",
+        },
+        {
+          id: "faith-based",
+          title: "Faith-Based Approach",
+          description:
+            "Nursing as a ministry. We nurture both clinical skill and spiritual character.",
+          icon: "squarePlus",
+          backgroundColor: "#00B4D8",
+          textColor: "#ffffff",
+          layout: "small",
+        },
+        {
+          id: "modern-facilities",
+          title: "Modern Facilities",
+          description:
+            "Advanced simulation labs and digital learning resources.",
+          icon: "microscope",
+          backgroundColor: "#E0E3E6",
+          textColor: "#320056",
+          layout: "small",
+        },
+        {
+          id: "vibrant-campus-life",
+          title: "Vibrant Campus Life",
+          description:
+            "Peaceful environment in Ekinrin-Adde perfect for focused study and spiritual growth.",
+          image: {src: "/campuslife.png", alt: "Campus life"},
+          backgroundColor: "#ffffff",
+          textColor: "#320056",
+          borderColor: "#005768",
+          layout: "image",
+        },
+      ],
+    },
     programmes: {
       header: {
         title: "Our Professional Paths",

@@ -48,6 +48,31 @@ export type LandingProgrammePreview = {
   }>;
 };
 
+// ==================== WHY CHOOSE TYPES ====================
+
+export type WhyChooseItem = {
+  id: string;
+  title: string;
+  description: string;
+  image?: {
+    src: string;
+    alt: string;
+  };
+  icon?: "microscope" | "squarePlus";
+  backgroundColor: string;
+  textColor: string;
+  borderColor?: string;
+  layout: "large" | "small" | "image";
+};
+
+export type WhyChooseContent = {
+  title: string;
+  subtitle: string;
+  items: WhyChooseItem[];
+};
+
+// ==================== LANDING PAGE CONTENT ====================
+
 export type LandingPageContent = {
   hero: {
     badge: string;
@@ -59,8 +84,11 @@ export type LandingPageContent = {
     image: {src: string; alt: string};
     floatingCard: {title: string; description: string};
   };
-  whyChoose?: unknown;
+
+  whyChoose: WhyChooseContent; // ← Add this line
+
   programmes?: LandingProgrammePreview;
+
   chronicles: {
     title: string;
     items: Array<{

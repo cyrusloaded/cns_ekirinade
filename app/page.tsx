@@ -14,10 +14,9 @@ export default async function HomePage() {
     <main>
       <HeroSection content={homePage.content.hero} />
 
-      {/* Mission & Vision from About page */}
       <MissionVision content={aboutPage.content.missionVision} />
 
-      <WhyChooseSection />
+      <WhyChooseSection content={homePage.content.whyChoose} />
 
       <ProgrammesSection content={homePage.content.programmes} />
 
